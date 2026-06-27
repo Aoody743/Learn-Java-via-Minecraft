@@ -1,0 +1,11 @@
+services:
+  learn-java-via-minecraft:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - JAVA_SANDBOX_IMAGE=eclipse-temurin:21-jdk
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
