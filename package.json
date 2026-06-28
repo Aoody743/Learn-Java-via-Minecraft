@@ -1,0 +1,22 @@
+{
+  "name": "learn-java-via-minecraft",
+  "version": "1.0.0",
+  "description": "Interactive Minecraft-themed Java learning app with a Docker-backed Java sandbox.",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "check": "npm run lint && npm run content:check && npm test && npm run test:e2e",
+    "test": "node --test test/server.test.js",
+    "lint": "node --check app.js && node --check server.js",
+    "test:e2e": "playwright test",
+    "content:check": "node scripts/validate-content.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1"
+  }
+}

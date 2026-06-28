@@ -1,0 +1,493 @@
+{
+  "lessons": [
+    {
+      "id": "intro",
+      "era": "出生点",
+      "title": "为什么 Minecraft 可以帮你学 Java",
+      "level": "入门",
+      "minutes": 8,
+      "objective": "理解 Java、Minecraft Java Edition、插件与 MOD 的关系。",
+      "scene": "服务器启动时会加载插件、注册命令和监听事件。",
+      "concept": "Java 是 Minecraft Java Edition 和大量服务器插件生态的重要语言。",
+      "explanation": "把玩家、方块、实体、物品和事件看成程序对象，可以让抽象语法变得具体。",
+      "breakdown": [
+        "class 表示一类对象或程序入口。",
+        "方法表示可以被调用的一段行为。",
+        "输出日志能帮助调试插件启动流程。"
+      ],
+      "mistakes": [
+        "把插件主类和普通 Java main 方法混为一谈。",
+        "只背语法，不理解对象和事件。"
+      ],
+      "exercise": "解释 onEnable 为什么像插件的启动入口。",
+      "checkpoint": "能说出插件为什么适合用来练 Java。",
+      "summary": "Minecraft 场景可以自然映射 Java 的对象、方法和事件。",
+      "code": "public class FirstPlugin {\n    public void onEnable() {\n        System.out.println(\"服务器插件启动！\");\n    }\n}"
+    },
+    {
+      "id": "variables",
+      "era": "木头时代",
+      "title": "变量与数据类型：记录玩家血量和等级",
+      "level": "入门",
+      "minutes": 12,
+      "objective": "掌握 String、int、double、boolean 的基本用途。",
+      "scene": "Steve 有名字、血量、等级、坐标和 OP 状态。",
+      "concept": "变量是给数据起名字；数据类型规定变量能保存什么。",
+      "explanation": "插件中几乎所有状态都来自变量，例如血量、金币、权限和坐标。",
+      "breakdown": [
+        "String 保存文字。",
+        "int 保存整数。",
+        "double 保存小数。",
+        "boolean 保存 true/false。"
+      ],
+      "mistakes": [
+        "字符串忘记加双引号。",
+        "把小数放进 int。"
+      ],
+      "exercise": "为金币、是否飞行、玩家名各写一个变量。",
+      "checkpoint": "能为一个玩家面板设计 4 个变量。",
+      "summary": "变量是后续条件、循环和对象设计的基础。",
+      "code": "String playerName = \"Steve\";\nint health = 20;\nint level = 5;\ndouble x = 100.5;\nboolean op = false;"
+    },
+    {
+      "id": "if",
+      "era": "石器时代",
+      "title": "if 判断：玩家是否死亡",
+      "level": "入门",
+      "minutes": 10,
+      "objective": "使用条件表达式控制程序分支。",
+      "scene": "如果玩家血量小于等于 0，就触发死亡提示。",
+      "concept": "if 根据 true/false 决定执行哪段代码。",
+      "explanation": "插件权限、金币是否足够、是否在领地内都依赖条件判断。",
+      "breakdown": [
+        "health <= 0 是布尔表达式。",
+        "else 表示条件不成立时的分支。"
+      ],
+      "mistakes": [
+        "把 = 当成 ==。",
+        "忘记大括号导致逻辑范围错误。"
+      ],
+      "exercise": "写出金币是否足够购买物品的 if。",
+      "checkpoint": "能写出判断金币是否足够的 if。",
+      "summary": "if 让插件能根据玩家状态做不同反应。",
+      "code": "int health = 0;\nif (health <= 0) {\n    System.out.println(\"玩家死亡\");\n} else {\n    System.out.println(\"玩家仍然存活\");\n}"
+    },
+    {
+      "id": "loop",
+      "era": "熔炉时代",
+      "title": "for 循环：给所有在线玩家发公告",
+      "level": "入门",
+      "minutes": 12,
+      "objective": "使用循环处理一组玩家。",
+      "scene": "服务器重启前给每个在线玩家发送公告。",
+      "concept": "循环可以重复执行代码。",
+      "explanation": "遍历在线玩家、背包物品、领地成员时都需要循环。",
+      "breakdown": [
+        "players 是数组。",
+        "player 是每次循环拿到的当前玩家名。"
+      ],
+      "mistakes": [
+        "循环变量名和集合名混淆。",
+        "在循环中修改集合导致异常。"
+      ],
+      "exercise": "遍历玩家列表输出欢迎语。",
+      "checkpoint": "能写出遍历玩家列表的增强 for。",
+      "summary": "循环把一次操作扩展到一批对象。",
+      "code": "String[] players = {\"Steve\", \"Alex\", \"Notch\"};\nfor (String player : players) {\n    System.out.println(player + \" 收到重启公告\");\n}"
+    },
+    {
+      "id": "method",
+      "era": "铁器时代",
+      "title": "方法：封装传送玩家逻辑",
+      "level": "基础",
+      "minutes": 12,
+      "objective": "理解参数、方法名和复用。",
+      "scene": "多处都要把玩家传送到出生点。",
+      "concept": "方法把可复用逻辑封装起来。",
+      "explanation": "命令处理、事件响应和工具函数都由方法组成。",
+      "breakdown": [
+        "playerName 是参数。",
+        "方法体里写具体动作。"
+      ],
+      "mistakes": [
+        "方法只定义不调用。",
+        "参数类型和调用值不匹配。"
+      ],
+      "exercise": "把发送消息封装为 sendTip 方法。",
+      "checkpoint": "能把发送消息封装为方法。",
+      "summary": "方法让代码更清晰、更容易维护。",
+      "code": "public void teleportToSpawn(String playerName) {\n    System.out.println(playerName + \" 被传送到出生点\");\n}"
+    },
+    {
+      "id": "class",
+      "era": "钻石时代",
+      "title": "类和对象：设计一个 Zombie 类",
+      "level": "基础",
+      "minutes": 15,
+      "objective": "理解类、字段、构造方法和对象。",
+      "scene": "普通僵尸和强化僵尸来自同一个 Zombie 模板。",
+      "concept": "类是模板，对象是模板创建出的实例。",
+      "explanation": "Player、Block、ItemStack 都可以用对象思维理解。",
+      "breakdown": [
+        "字段保存对象状态。",
+        "构造方法初始化对象。"
+      ],
+      "mistakes": [
+        "把类名和对象变量名混淆。",
+        "字段不初始化。"
+      ],
+      "exercise": "设计一个 Monster 类，包含 name 和 health。",
+      "checkpoint": "能设计一个 Monster 类。",
+      "summary": "面向对象是插件和 MOD API 的核心。",
+      "code": "public class Zombie {\n    private int health;\n    private int damage;\n\n    public Zombie(int health, int damage) {\n        this.health = health;\n        this.damage = damage;\n    }\n}"
+    },
+    {
+      "id": "list",
+      "era": "附魔时代",
+      "title": "List 集合：管理在线玩家列表",
+      "level": "基础",
+      "minutes": 12,
+      "objective": "使用 List 保存多个对象。",
+      "scene": "插件维护在线玩家名称列表。",
+      "concept": "List 保存一组有顺序的数据。",
+      "explanation": "在线玩家、任务列表、菜单按钮都适合用 List。",
+      "breakdown": [
+        "List<String> 表示字符串列表。",
+        "增强 for 可以遍历 List。"
+      ],
+      "mistakes": [
+        "忘记导入 java.util.List。",
+        "把索引和元素混淆。"
+      ],
+      "exercise": "遍历 List 并输出每个玩家。",
+      "checkpoint": "能遍历 List 并输出每个元素。",
+      "summary": "集合让程序能管理动态数量的数据。",
+      "code": "List<String> onlinePlayers = List.of(\"Steve\", \"Alex\");\nfor (String player : onlinePlayers) {\n    System.out.println(player);\n}"
+    },
+    {
+      "id": "map",
+      "era": "绿宝石时代",
+      "title": "Map 集合：制作金币系统",
+      "level": "基础",
+      "minutes": 15,
+      "objective": "用键值对保存玩家余额。",
+      "scene": "金币插件用玩家名查余额。",
+      "concept": "Map 保存 key 到 value 的映射。",
+      "explanation": "玩家 UUID 到金币、领地 ID 到领地对象都可用 Map。",
+      "breakdown": [
+        "put 保存键值对。",
+        "get 根据 key 读取 value。"
+      ],
+      "mistakes": [
+        "读取不存在 key 得到 null。",
+        "用玩家名而不是 UUID 可能改名丢数据。"
+      ],
+      "exercise": "用 Map 保存 Steve 的 100 金币。",
+      "checkpoint": "能写出 put 和 get。",
+      "summary": "Map 是数据系统的基础。",
+      "code": "Map<String, Integer> money = new HashMap<>();\nmoney.put(\"Steve\", 100);\nSystem.out.println(money.get(\"Steve\"));"
+    },
+    {
+      "id": "event",
+      "era": "红石时代",
+      "title": "事件思想：玩家加入服务器时触发欢迎消息",
+      "level": "基础",
+      "minutes": 15,
+      "objective": "理解事件监听和回调。",
+      "scene": "玩家加入服务器触发 PlayerJoinEvent。",
+      "concept": "事件驱动是插件开发核心。",
+      "explanation": "不是你主动循环问玩家是否加入，而是服务器在事件发生时通知插件。",
+      "breakdown": [
+        "@EventHandler 标记事件方法。",
+        "event.getPlayer() 取得触发事件的玩家。"
+      ],
+      "mistakes": [
+        "忘记注册 Listener。",
+        "事件方法参数类型写错。"
+      ],
+      "exercise": "描述 PlayerJoinEvent 的触发时机。",
+      "checkpoint": "能解释 Listener 的作用。",
+      "summary": "事件把 Java 基础连接到真实插件开发。",
+      "code": "@EventHandler\npublic void onPlayerJoin(PlayerJoinEvent event) {\n    Player player = event.getPlayer();\n    player.sendMessage(\"欢迎来到服务器！\");\n}"
+    }
+  ],
+  "pluginLessons": [
+    {
+      "title": "欢迎插件完整文件树",
+      "goal": "从空项目到可加载 jar。",
+      "snippet": "build.gradle\nsrc/main/java/me/demo/LearnPlugin.java\nsrc/main/java/me/demo/JoinListener.java\nsrc/main/resources/plugin.yml\nsrc/main/resources/config.yml",
+      "checkpoint": "完成后能说明：从空项目到可加载 jar。",
+      "steps": [
+        "从空项目到可加载 jar。",
+        "阅读代码片段",
+        "在本地插件项目中复现并测试"
+      ]
+    },
+    {
+      "title": "步骤 1：主类 JavaPlugin",
+      "goal": "创建插件生命周期入口。",
+      "snippet": "public final class LearnPlugin extends JavaPlugin {\n  public void onEnable() { saveDefaultConfig(); }\n}",
+      "checkpoint": "完成后能说明：创建插件生命周期入口。",
+      "steps": [
+        "创建插件生命周期入口。",
+        "阅读代码片段",
+        "在本地插件项目中复现并测试"
+      ]
+    },
+    {
+      "title": "步骤 2：注册监听器",
+      "goal": "把 PlayerJoinEvent 接入主类。",
+      "snippet": "getServer().getPluginManager().registerEvents(new JoinListener(this), this);",
+      "checkpoint": "完成后能说明：把 PlayerJoinEvent 接入主类。",
+      "steps": [
+        "把 PlayerJoinEvent 接入主类。",
+        "阅读代码片段",
+        "在本地插件项目中复现并测试"
+      ]
+    },
+    {
+      "title": "步骤 3：plugin.yml 与权限",
+      "goal": "声明命令、主类和 learn.admin 权限。",
+      "snippet": "permissions:\n  learn.admin:\n    default: op",
+      "checkpoint": "完成后能说明：声明命令、主类和 learn.admin 权限。",
+      "steps": [
+        "声明命令、主类和 learn.admin 权限。",
+        "阅读代码片段",
+        "在本地插件项目中复现并测试"
+      ]
+    },
+    {
+      "title": "步骤 4：配置文件",
+      "goal": "从 config.yml 读取欢迎语。",
+      "snippet": "welcome: \"欢迎 {player} 来到服务器！\"",
+      "checkpoint": "完成后能说明：从 config.yml 读取欢迎语。",
+      "steps": [
+        "从 config.yml 读取欢迎语。",
+        "阅读代码片段",
+        "在本地插件项目中复现并测试"
+      ]
+    },
+    {
+      "title": "步骤 5：金币命令项目",
+      "goal": "组合 Map、命令参数和权限完成 /money。",
+      "snippet": "/money\n/pay <player> <amount>\n/money admin set <player> <amount>",
+      "checkpoint": "完成后能说明：组合 Map、命令参数和权限完成 /money。",
+      "steps": [
+        "组合 Map、命令参数和权限完成 /money。",
+        "阅读代码片段",
+        "在本地插件项目中复现并测试"
+      ]
+    }
+  ],
+  "modLessons": [
+    {
+      "title": "Forge 路线",
+      "goal": "理解 @Mod、DeferredRegister 和事件总线。",
+      "snippet": "@Mod(MOD_ID)\npublic class LearnMod { ... }",
+      "checkpoint": "能对比说明：理解 @Mod、DeferredRegister 和事件总线。",
+      "steps": [
+        "理解 @Mod、DeferredRegister 和事件总线。",
+        "比较 Forge/Fabric 写法",
+        "记录客户端/服务端注意事项"
+      ]
+    },
+    {
+      "title": "Fabric 路线",
+      "goal": "理解 ModInitializer、Registry 和事件回调。",
+      "snippet": "public class LearnMod implements ModInitializer { ... }",
+      "checkpoint": "能对比说明：理解 ModInitializer、Registry 和事件回调。",
+      "steps": [
+        "理解 ModInitializer、Registry 和事件回调。",
+        "比较 Forge/Fabric 写法",
+        "记录客户端/服务端注意事项"
+      ]
+    },
+    {
+      "title": "方块注册",
+      "goal": "注册 ruby_block 并绑定 BlockItem。",
+      "snippet": "Registry.register(Registries.BLOCK, id(\"ruby_block\"), RUBY_BLOCK);",
+      "checkpoint": "能对比说明：注册 ruby_block 并绑定 BlockItem。",
+      "steps": [
+        "注册 ruby_block 并绑定 BlockItem。",
+        "比较 Forge/Fabric 写法",
+        "记录客户端/服务端注意事项"
+      ]
+    },
+    {
+      "title": "物品注册",
+      "goal": "注册 ruby 材料和工具物品。",
+      "snippet": "Registry.register(Registries.ITEM, id(\"ruby\"), new Item(settings));",
+      "checkpoint": "能对比说明：注册 ruby 材料和工具物品。",
+      "steps": [
+        "注册 ruby 材料和工具物品。",
+        "比较 Forge/Fabric 写法",
+        "记录客户端/服务端注意事项"
+      ]
+    },
+    {
+      "title": "事件总线",
+      "goal": "对比插件 Listener 与 MOD EventBus。",
+      "snippet": "ServerTickEvents.END_SERVER_TICK.register(server -> {});",
+      "checkpoint": "能对比说明：对比插件 Listener 与 MOD EventBus。",
+      "steps": [
+        "对比插件 Listener 与 MOD EventBus。",
+        "比较 Forge/Fabric 写法",
+        "记录客户端/服务端注意事项"
+      ]
+    },
+    {
+      "title": "资源与数据包",
+      "goal": "理解 assets、data、模型、贴图、语言文件、合成表。",
+      "snippet": "assets/learnmod/textures/item/ruby.png\ndata/learnmod/recipes/ruby_block.json",
+      "checkpoint": "能对比说明：理解 assets、data、模型、贴图、语言文件、合成表。",
+      "steps": [
+        "理解 assets、data、模型、贴图、语言文件、合成表。",
+        "比较 Forge/Fabric 写法",
+        "记录客户端/服务端注意事项"
+      ]
+    },
+    {
+      "title": "客户端与服务端区别",
+      "goal": "区分渲染/按键和世界规则/数据保存。",
+      "snippet": "ClientModInitializer 只处理客户端显示；服务端保存权威数据。",
+      "checkpoint": "能对比说明：区分渲染/按键和世界规则/数据保存。",
+      "steps": [
+        "区分渲染/按键和世界规则/数据保存。",
+        "比较 Forge/Fabric 写法",
+        "记录客户端/服务端注意事项"
+      ]
+    }
+  ],
+  "practices": [
+    {
+      "type": "blank",
+      "title": "判断玩家死亡",
+      "prompt": "当 health 为 0 时，if 条件应该写什么？",
+      "before": "if (",
+      "after": ") { 输出(\"玩家死亡\"); }",
+      "answer": "health <= 0",
+      "acceptedAnswers": [
+        "health <= 0",
+        "0 >= health"
+      ],
+      "hint": "比较 health 和 0，死亡条件是小于等于。",
+      "xp": 20,
+      "explanation": "判断玩家死亡 的关键是把 Minecraft 场景对应到正确的 Java 语法或插件 API。",
+      "whyWrong": "这个答案没有匹配题目要求的语法/API；请检查变量名、方法名、比较方向或大小写。"
+    },
+    {
+      "type": "blank",
+      "title": "遍历玩家名",
+      "prompt": "补全变量名，让每个玩家收到消息。",
+      "before": "System.out.println(",
+      "after": " + \" 收到欢迎消息\");",
+      "answer": "player",
+      "acceptedAnswers": [
+        "player"
+      ],
+      "hint": "增强 for 当前元素变量叫 player。",
+      "xp": 20,
+      "explanation": "遍历玩家名 的关键是把 Minecraft 场景对应到正确的 Java 语法或插件 API。",
+      "whyWrong": "这个答案没有匹配题目要求的语法/API；请检查变量名、方法名、比较方向或大小写。"
+    },
+    {
+      "type": "blank",
+      "title": "读取金币余额",
+      "prompt": "Map 中用什么方法根据玩家名取余额？",
+      "before": "money.",
+      "after": "(\"Steve\");",
+      "answer": "get",
+      "acceptedAnswers": [
+        "get"
+      ],
+      "hint": "Map 写入用 put，读取用 get。",
+      "xp": 20,
+      "explanation": "读取金币余额 的关键是把 Minecraft 场景对应到正确的 Java 语法或插件 API。",
+      "whyWrong": "这个答案没有匹配题目要求的语法/API；请检查变量名、方法名、比较方向或大小写。"
+    },
+    {
+      "type": "choice",
+      "title": "插件启动入口",
+      "prompt": "Paper 插件启动时通常会调用哪个生命周期方法？",
+      "options": [
+        "onEnable",
+        "main",
+        "startGame"
+      ],
+      "answer": "onEnable",
+      "acceptedAnswers": [
+        "onEnable"
+      ],
+      "hint": "JavaPlugin 生命周期入口。",
+      "xp": 30,
+      "explanation": "插件启动入口 的关键是把 Minecraft 场景对应到正确的 Java 语法或插件 API。",
+      "whyWrong": "这个答案没有匹配题目要求的语法/API；请检查变量名、方法名、比较方向或大小写。"
+    },
+    {
+      "type": "choice",
+      "title": "事件注解",
+      "prompt": "哪个注解表示这是一个事件处理方法？",
+      "options": [
+        "@EventHandler",
+        "@MinecraftBlock",
+        "@RunCommand"
+      ],
+      "answer": "@EventHandler",
+      "acceptedAnswers": [
+        "@EventHandler"
+      ],
+      "hint": "Bukkit 监听器使用的注解。",
+      "xp": 30,
+      "explanation": "事件注解 的关键是把 Minecraft 场景对应到正确的 Java 语法或插件 API。",
+      "whyWrong": "这个答案没有匹配题目要求的语法/API；请检查变量名、方法名、比较方向或大小写。"
+    },
+    {
+      "type": "code",
+      "title": "欢迎消息补全",
+      "prompt": "补全代码，让玩家加入时收到欢迎消息。",
+      "starter": "Player player = event.getPlayer();\nplayer._____(\"欢迎来到服务器！\");",
+      "answer": "sendMessage",
+      "acceptedAnswers": [
+        "sendMessage",
+        "sendMessage()"
+      ],
+      "hint": "必须补出 Player 的 sendMessage 方法名。",
+      "xp": 40,
+      "tests": [
+        {
+          "name": "调用 sendMessage",
+          "pattern": "sendMessage\\s*(?:\\(|$)"
+        }
+      ],
+      "explanation": "欢迎消息补全 的关键是把 Minecraft 场景对应到正确的 Java 语法或插件 API。",
+      "whyWrong": "这个答案没有匹配题目要求的语法/API；请检查变量名、方法名、比较方向或大小写。"
+    }
+  ],
+  "achievements": [
+    {
+      "id": "first_lesson",
+      "title": "砍下第一棵树",
+      "description": "完成任意一节 Java 基础课。"
+    },
+    {
+      "id": "plugin_path",
+      "title": "插件工匠",
+      "description": "完成 3 个插件任务。"
+    },
+    {
+      "id": "challenge_runner",
+      "title": "挑战者",
+      "description": "完成 3 道互动题。"
+    },
+    {
+      "id": "sandbox_pass",
+      "title": "安全执行者",
+      "description": "通过 1 次后端沙箱测试。"
+    },
+    {
+      "id": "mod_starter",
+      "title": "MOD 入门者",
+      "description": "浏览 MOD 原理课程。"
+    }
+  ]
+}

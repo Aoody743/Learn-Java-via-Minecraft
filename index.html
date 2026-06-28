@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>用 Minecraft 学 Java</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero" id="top">
+      <nav class="nav">
+        <a class="brand" href="#top" aria-label="返回首页">☘ 用 Minecraft 学 Java</a>
+        <div class="nav-links">
+          <a href="#roadmap">学习路线</a>
+          <a href="#lessons">课程</a>
+          <a href="#plugins">插件阶段</a>
+          <a href="#practice">挑战</a>
+          <a href="#sandbox">沙箱</a>
+          <a href="#mod">MOD 原理</a>
+          <a href="#leaderboard">排行榜</a>
+        </div>
+      </nav>
+      <section class="hero-grid">
+        <div>
+          <p class="eyebrow">MVP · 阶段 1-5 · Java / Paper 插件 / MOD / 沙箱</p>
+          <h1>从玩家血量、方块事件和服务器插件开始学习 Java。</h1>
+          <p class="hero-copy">
+            从玩家血量、方块事件、服务器插件到 MOD 原理，轻松掌握 Java 编程。这个网页程序把 Java 变量、条件、循环、方法、类、集合、事件监听、命令系统、MOD 注册和沙箱练习转换成 Minecraft Java Edition 场景。
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#lessons">开始基础课程</a>
+            <a class="button secondary" href="#roadmap">查看学习路线</a>
+            <a class="button secondary" href="#plugins">进入插件开发路线</a>
+            <a class="button secondary" href="#mod">进入 MOD 原理路线</a>
+            <a class="button secondary" href="#sandbox">运行挑战沙箱</a>
+          </div>
+        </div>
+        <aside class="hud-panel" aria-label="学习进度面板">
+          <div class="hud-title">玩家学习 HUD</div>
+          <div class="player-card">
+            <div class="avatar">🧑‍💻</div>
+            <div>
+              <strong>Java 新手 Steve</strong>
+              <span id="progressText">完成 0 / 10 课 · 0 / 8 插件任务</span>
+            </div>
+          </div>
+          <div class="bar" id="progressMeter" role="progressbar" aria-label="总学习进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progressBar"></span></div>
+          <div class="sync-panel">
+            <label for="profileName">云端昵称</label>
+            <input id="profileName" aria-label="云端昵称" placeholder="Minecraft 学徒" />
+            <button class="button ghost" id="syncProfile">登录 / 同步进度</button>
+            <p id="syncStatus" aria-live="polite">未登录时使用本地进度。</p>
+          </div>
+          <ul>
+            <li>生命值变量：<code>int health = 20;</code></li>
+            <li>在线玩家集合：<code>List&lt;Player&gt;</code></li>
+            <li>事件监听：<code>@EventHandler</code></li>
+            <li>命令入口：<code>onCommand(...)</code></li>
+          </ul>
+        </aside>
+      </section>
+    </header>
+
+    <main>
+      <div class="app-status" id="appStatus" aria-live="polite">正在加载课程内容...</div>
+      <section class="section" id="roadmap">
+        <div class="section-heading">
+          <p class="eyebrow">Roadmap</p>
+          <h2>阶段 1-5 学习路线</h2>
+          <p>完整覆盖 Java 基础、插件开发、交互挑战、后端 Docker 沙箱和 MOD 原理课程。</p>
+        </div>
+        <div class="phase-grid">
+          <article class="phase-card"><span>阶段 1</span><h3>Java 基础 MVP</h3><p>变量、判断、循环、方法、类、集合和事件思想。</p></article>
+          <article class="phase-card"><span>阶段 2</span><h3>Paper 插件开发</h3><p>插件结构、plugin.yml、命令、监听器、配置、定时任务。</p></article>
+          <article class="phase-card"><span>阶段 3</span><h3>交互挑战系统</h3><p>选择题、填空题、代码补全题、即时反馈和经验奖励。</p></article>
+          <article class="phase-card"><span>阶段 4</span><h3>Java 代码沙箱</h3><p>后端编译运行、Docker 隔离、资源限制、自动测试用例和排行榜。</p></article>
+          <article class="phase-card"><span>阶段 5</span><h3>MOD 原理课程</h3><p>Forge / Fabric、方块、物品、事件总线、资源、数据包和客户端/服务端。</p></article>
+        </div>
+        <div class="roadmap" id="roadmapList"></div>
+      </section>
+
+      <section class="section split" id="lessons">
+        <div class="section-heading">
+          <p class="eyebrow">Stage 1</p>
+          <h2>Java 基础交互课程</h2>
+          <p>选择课程后阅读场景解释、Java 概念和代码示例，并标记完成进度。</p>
+        </div>
+        <div class="lesson-shell">
+          <label class="mobile-picker">快速选择课程
+            <select id="lessonPicker" aria-label="移动端课程选择"></select>
+          </label>
+          <aside class="lesson-list" id="lessonList" aria-label="课程列表"></aside>
+          <article class="lesson-detail" id="lessonDetail"></article>
+        </div>
+      </section>
+
+      <section class="section" id="plugins">
+        <div class="section-heading">
+          <p class="eyebrow">Stage 2</p>
+          <h2>Paper / Spigot 插件开发阶段</h2>
+          <p>把 Java 基础迁移到真实服务器插件结构，学习主类、事件、命令、权限、配置和小插件实战。</p>
+        </div>
+        <div class="plugin-grid" id="pluginGrid"></div>
+      </section>
+
+      <section class="section" id="practice">
+        <div class="section-heading">
+          <p class="eyebrow">Stage 3</p>
+          <h2>任务挑战系统</h2>
+          <p>完成选择题、填空题和代码补全题，系统会即时判定答案、显示错误提示、累计任务积分并解锁成就。代码编辑区优先加载 Monaco Editor，失败时自动降级为普通编辑器。</p>
+        </div>
+        <div class="practice-toolbar">
+          <span id="xpText">XP：0</span>
+          <button class="button ghost" id="resetProgress">重置本地进度</button>
+        </div>
+        <div class="achievement-grid" id="achievementGrid"></div>
+        <div class="practice-grid" id="practiceGrid"></div>
+      </section>
+
+      <section class="section" id="sandbox">
+        <div class="section-heading">
+          <p class="eyebrow">Stage 4</p>
+          <h2>Java 代码沙箱</h2>
+          <p>支持调用本仓库的 Node 后端编译运行 Java。后端使用 Docker 隔离、网络关闭、CPU/内存/时间限制和自动测试用例；未启动后端或 Docker 不可用时，前端会显示明确错误。</p>
+        </div>
+        <div class="status-board" id="sandboxHealth" aria-live="polite">正在检查后端沙箱健康状态...</div>
+        <div class="sandbox-shell">
+          <label class="mobile-picker">快速选择沙箱题目
+            <select id="sandboxPicker" aria-label="移动端沙箱题目选择"></select>
+          </label>
+          <aside class="sandbox-list" id="sandboxList"></aside>
+          <article class="sandbox-runner">
+            <div class="runner-header">
+              <h3 id="sandboxTitle">沙箱练习</h3>
+              <button class="button primary" id="runSandbox">运行后端沙箱测试</button>
+            </div>
+            <p id="sandboxGoal"></p>
+            <div class="runner-actions" aria-label="沙箱操作">
+              <button class="button ghost" id="resetSandboxCode">重置当前代码</button>
+              <button class="button ghost" id="copySandboxCode">复制代码</button>
+              <button class="button ghost" id="copyConsole">复制控制台</button>
+              <button class="button ghost" id="clearConsole">清空控制台</button>
+            </div>
+            <p class="editor-status" id="monacoStatus" aria-live="polite">正在加载代码编辑器；如果 CDN 不可用会自动使用本地 textarea。</p>
+            <div id="monacoEditor" class="monaco-shell"></div>
+            <textarea id="codeEditor" spellcheck="false" aria-label="Java 代码编辑器"></textarea>
+            <div class="test-results" id="testResults" aria-live="polite"></div>
+            <pre class="console" id="consoleOutput">点击“运行测试”查看模拟控制台输出。</pre>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="mod">
+        <div class="section-heading">
+          <p class="eyebrow">Stage 5</p>
+          <h2>MOD 原理课程</h2>
+          <p>理解 Forge / Fabric MOD 与服务器插件的差异，学习注册方块、物品、事件总线、资源文件、数据包和客户端/服务端分离。</p>
+        </div>
+        <div class="plugin-grid" id="modGrid"></div>
+      </section>
+
+      <section class="section" id="leaderboard">
+        <div class="section-heading">
+          <p class="eyebrow">Leaderboard</p>
+          <h2>云端排行榜</h2>
+          <p>登录 / 同步后，排行榜来自后端 API；未登录时会显示本地得分预览。</p>
+        </div>
+        <div class="leaderboard-card" id="leaderboardCard"></div>
+      </section>
+
+      <section class="section" id="projects">
+        <div class="section-heading">
+          <p class="eyebrow">Projects</p>
+          <h2>插件实战项目</h2>
+          <p>完成前四阶段后，可以用这些项目把 Java 基础、插件 API 和测试思维串起来。</p>
+        </div>
+        <div class="project-grid">
+          <article class="project-card"><h3>玩家欢迎插件</h3><p>学习事件监听、获取玩家对象、发送聊天消息。</p></article>
+          <article class="project-card"><h3>简易金币系统</h3><p>学习 Map 集合、命令参数和数据持久化思想。</p></article>
+          <article class="project-card"><h3>领地保护简化版</h3><p>学习对象建模、权限判断和方块破坏事件。</p></article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">用 Minecraft Java Edition 的游戏机制理解 Java，而不是死记语法。</footer>
+    <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs/loader.js" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
